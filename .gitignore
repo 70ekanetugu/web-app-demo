@@ -1,0 +1,11 @@
+.devcontainer/
+.vscode/
+
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+go.work
+go.work.sum
