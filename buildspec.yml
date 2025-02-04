@@ -1,0 +1,30 @@
+version: 0.2
+
+# CodeBuildが実行するコマンド。フェーズ(install->pre_build->build->post_build)
+phases:
+  install:
+    runtime-versions:
+      docker: 27
+  # ビルド前に実行するコマンド
+  pre_build:
+    commands:
+    - $(aws ecr get-login-password --region ap-northeast-1 | docker login --username AWS --password-stdin 521825925159.dkr.ecr.ap-northeast-1.amazonaws.com)
+    - REPOSITORY_WEB=521825925159.dkr.ecr.ap-northeast-1.amazonaws.com/terraform-demo-web
+    - REPOSITORY_AP=521825925159.dkr.ecr.ap-northeast-1.amazonaws.com/terraform-demo-ap
+    - IMAGE_WEB=$REPOSITORY_WEB:latest
+    - IMAGE_AP=$REPOSITORY_AP:latest
+  # ビルド処理
+  build:
+    commands:
+    - docker build -t $IMAGE_WEB -f ./docker/nginx/Dockerfile .
+    - docker build -t $IMAGE_AP -f ./docker/go-lang/Dockerfile .
+    - docker push $IMAGE_WEB
+    - docker push $IMAGE_AP
+  # ビルド後に実行するコマンド
+  post_build:
+    commands:
+    - printf '[{"name":"demo-ap","imageUri":"%s"},{"name":"demo-web","imageUri":"%s"}]' $IMAGE_WEB $IMAGE_AP > imagedefinitions.json
+
+# ビルド出力結果の保存先
+artifacts:
+  files: imagedefinitions.json
