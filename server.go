@@ -10,6 +10,7 @@ import (
 	"syscall"
 
 	"github.com/70ekanetugu/webdemo/handler"
+	"github.com/70ekanetugu/webdemo/middleware"
 	"github.com/70ekanetugu/webdemo/repository"
 )
 
@@ -27,12 +28,12 @@ func main() {
 
 	listenSignal(server, shutdownBus)
 
-	http.HandleFunc("GET /hello", handler.HelloWorld)
-	http.HandleFunc("GET /todos", handler.GetTodoList)
-	http.HandleFunc("GET /todos/{id}", handler.GetTodoById)
-	http.HandleFunc("POST /todos", handler.SaveTodo)
-	http.HandleFunc("PUT /todos/{id}", handler.SaveTodo)
-	http.HandleFunc("PATCH /todos/{id}/status", handler.SaveStatus)
+	http.HandleFunc("GET /hello", middleware.Logging(handler.HelloWorld))
+	http.HandleFunc("GET /todos", middleware.Logging(handler.GetTodoList))
+	http.HandleFunc("GET /todos/{id}", middleware.Logging(handler.GetTodoById))
+	http.HandleFunc("POST /todos", middleware.Logging(handler.SaveTodo))
+	http.HandleFunc("PUT /todos/{id}", middleware.Logging(handler.SaveTodo))
+	http.HandleFunc("PATCH /todos/{id}/status", middleware.Logging(handler.SaveStatus))
 
 	slog.Info("Starting server...")
 	if err := server.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
