@@ -29,6 +29,7 @@ func main() {
 	listenSignal(server, shutdownBus)
 
 	http.HandleFunc("GET /hello", middleware.Logging(handler.HelloWorld))
+	http.HandleFunc("GET /error", middleware.Logging(handler.ErrorHandler))
 	http.HandleFunc("GET /todos", middleware.Logging(handler.GetTodoList))
 	http.HandleFunc("GET /todos/{id}", middleware.Logging(handler.GetTodoById))
 	http.HandleFunc("POST /todos", middleware.Logging(handler.SaveTodo))
