@@ -28,3 +28,17 @@ ECSで使用する場合は以下手順でECRへイメージを登録する。
    ```shell
    docker image push ${AWS_ACCOUNT_ID}.dkr.ecr.ap-northeast-1.amazonaws.com/todo-go-app:v1
    ```
+
+## Fluent Bit
+### 基礎
+docker-composeのログドライバオプションの `fluentd-address` は、ホストのアドレス:ポートを見に行くため、127.0.0.1を指定する必要がある。  
+(サービス名fluent-bitは不可)  
+また、ログドライバを変更する場合、先にFluent-Bitが起動している必要があるため、web, go-appのdepend_onにfluent-bitを指定している。  
+このため、fluent-bit側でヘルチェックが必要なため、docker/fluentbit/fluent-bit.conf ではヘルスチェック用にHTTP_ServerをOnにしている。
+
+### 設定
+docker/fluentbit/fluent-bit.conf で設定を修正可能。  
+詳細は公式を参照。  
+https://docs.fluentbit.io/manual/pipeline/pipeline-monitoring
+
+
