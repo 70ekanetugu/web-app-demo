@@ -1,7 +1,6 @@
-# 参考： https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services 
 name: Push Docker Image to ECR
 on:
-  workflow-dispatch:
+  workflow_dispatch:
     inputs:
       image_tag:
         description: 'Tag for the Docker image'
@@ -29,7 +28,7 @@ jobs:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # 一時的な認証情報の取得
+      # 参考： https://docs.github.com/en/actions/security-for-github-actions/security-hardening-your-deployments/configuring-openid-connect-in-amazon-web-services 
       - name: configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
@@ -59,7 +58,7 @@ jobs:
         uses: actions/setup-go@v5
         with:
           go-version: '1.23.2'
-          
+
       - name: Install dependencies
         run: |
           go mod tidy
