@@ -42,7 +42,7 @@ jobs:
             --platform linux/amd64 \
             --push \
             -f ./docker/golang/Dockerfile \
-            -t ${{ env.AWS_ACCOUNT_ID}}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ github.event.inputs.ecr_repository }}:${{ github.event.inputs.image_tag }} \
+            -t ${{ env.AWS_ACCOUNT_ID}}.dkr.ecr.ap-northeast-1.amazonaws.com/${{ github.event.inputs.ecr_repository_name }}:${{ github.event.inputs.image_tag }} \
             .
 
       - name: Build and push Fluent-Bit image
@@ -70,4 +70,4 @@ jobs:
 
       - name: Upload go app binary to S3
         run: |
-          aws s3 cp /usr/local/bin/server s3://${{ env.BUCKET_NAME }}/${{ github.event.inputs.ecr_repository }}/
+          aws s3 cp /usr/local/bin/server s3://${{ env.BUCKET_NAME }}/${{ github.event.inputs.ecr_repository_name }}/
