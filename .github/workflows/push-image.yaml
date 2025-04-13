@@ -14,7 +14,7 @@ env:
   AWS_REGION: ap-northeast-1
   AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
   AWS_ROLE_FOR_GITHUB_ACTIONS: ${{ secrets.AWS_ROLE_FOR_GITHUB_ACTIONS }} # IAMロールのARN
-  BUCKET_NAME: s3://kentugu-app-resources # go appバイナリの保存先バケット
+  BUCKET_NAME: ${{ secrets.BUCKET_NAME }} # go appバイナリの保存先バケット
 permissions:
   id-token: write
   contents: read
