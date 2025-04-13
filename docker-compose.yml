@@ -63,12 +63,12 @@ services:
   
   # 各コンテナのログドライバ
   fluent-bit:
-    image: fluent/fluent-bit:4.0-debug
+    build:
+      context: .
+      dockerfile: ./docker/fluentbit/Dockerfile
     ports:
       - "24224:24224"
       - "2020:2020"
-    volumes:
-      - ./docker/fluentbit/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:2020/health"]
       interval: 5s
