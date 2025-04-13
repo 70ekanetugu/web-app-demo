@@ -70,7 +70,7 @@ services:
       - "24224:24224"
       - "2020:2020"
     volumes:
-      - ./docker/fluent-bit/fluent-bit-local.conf:/fluent-bit/etc/fluent-bit.conf
+      - ./docker/fluentbit/fluent-bit-local.conf:/fluent-bit/etc/fluent-bit.conf
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:2020/health"]
       interval: 5s
