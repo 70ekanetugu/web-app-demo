@@ -76,3 +76,4 @@ jobs:
       - name: Upload go app binary to S3
         run: |
           aws s3 cp /usr/local/bin/server s3://${{ env.BUCKET_NAME }}/${{ github.event.inputs.ecr_repository_name }}/
+          aws s3 cp ./docker/fluentbit/fluent-bit-ec2.conf s3://${{ env.BUCKET_NAME }}/${{ github.event.inputs.ecr_repository_name }}/fluent-bit.conf
