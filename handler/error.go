@@ -10,5 +10,4 @@ func ErrorHandler(w http.ResponseWriter, r *http.Request) {
 	// 500エラーを発生させる
 	w.WriteHeader(http.StatusBadRequest)
 	w.Write([]byte("500 Internal Server Error"))
-	return
 }
