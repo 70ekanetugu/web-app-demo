@@ -29,11 +29,13 @@ services:
       - 8080:8080
     volumes:
       - ./:/workspaces
+      - ./data:/var/spool/data
     environment:
       - DB_HOST=db
       - DB_PORT=3306
       - DB_USER=todo_user
       - DB_PASSWORD=todo_user
+      - IMG_DIR_PATH=/var/spool/data/images
     tty: true
     # fluent-bitを使う場合の設定
     logging:

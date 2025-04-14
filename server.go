@@ -35,6 +35,7 @@ func main() {
 	http.HandleFunc("POST /todos", middleware.Logging(handler.SaveTodo))
 	http.HandleFunc("PUT /todos/{id}", middleware.Logging(handler.SaveTodo))
 	http.HandleFunc("PATCH /todos/{id}/status", middleware.Logging(handler.SaveStatus))
+	http.HandleFunc("GET /images/{name}", middleware.Logging(handler.DownloadImage))
 
 	slog.Info("Starting server...")
 	if err := server.ListenAndServe(); !errors.Is(err, http.ErrServerClosed) {
